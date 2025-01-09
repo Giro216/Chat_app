@@ -2,6 +2,10 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.net.Socket;
 import java.util.Scanner;
+//TODO Дописать работу 2 польователей между собой с прослушкой на сервере, также надо добавить бродкаст с сервера.
+// Потом надо обернуть в докер и поднять сервер. Затем проделать это же на 2 раных контейнерах/виртуалках.
+// Еще добавить нейронку в беседу.
+// Также надо будет добавить веб интерфейс и прописать бекенд через spring
 
 public class ChatClient {
     private Socket ClientSocket;
