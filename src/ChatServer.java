@@ -69,8 +69,10 @@ public class ChatServer {
           new Thread(() -> {
             Scanner serverInput = new Scanner(System.in);
             while (true) {
-              String serverMessage = serverInput.nextLine();
-              broadcast(serverMessage, null);
+              if (serverInput.hasNext()) {
+                String serverMessage = serverInput.nextLine();
+                broadcast(serverMessage, null);
+              }
             }
           }).start();
 
