@@ -4,6 +4,7 @@ import java.net.Socket;
 import java.util.Scanner;
 
 public class ChatClient {
+  //TODO сделать проверку работоспособности сервера и кидать исключение при необходимости
 
   private Socket ClientSocket;
   private PrintWriter SocketOutput;
@@ -16,7 +17,7 @@ public class ChatClient {
 
   ChatClient() throws IOException {
     try {
-      ClientSocket = new Socket("localhost", 8000);
+      ClientSocket = new Socket("192.168.0.18", 8000); // надо вводить ip сервера
       SocketOutput = new PrintWriter(ClientSocket.getOutputStream());
       SocketInput = new Scanner(ClientSocket.getInputStream());
       ClientSender = new Scanner(System.in);
