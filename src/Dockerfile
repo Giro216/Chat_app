@@ -5,13 +5,13 @@ FROM openjdk:11
 WORKDIR /app
 
 # Copy the server code into the container
-COPY ChatServer.java /app
+COPY server /app/server
 
 # Compile the Java code
-RUN javac ChatServer.java
+RUN javac server/ChatServer.java server/BroadcastServer.java
 
 # Expose the port the server will run on
 EXPOSE 8000
 
 # Run the server
-CMD ["java", "ChatServer"]
+CMD ["java", "server.ChatServer"]

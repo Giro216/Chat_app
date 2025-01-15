@@ -1,3 +1,5 @@
+package server;
+
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.net.ServerSocket;
@@ -8,6 +10,7 @@ import java.util.concurrent.CopyOnWriteArrayList;
 public class ChatServer {
 
   private static final int port = 8000;
+  
   private static CopyOnWriteArrayList<ClientHandler> ClientList = new CopyOnWriteArrayList<>();
 
   public static void main(String[] args) throws IOException {
@@ -17,6 +20,10 @@ public class ChatServer {
   public ChatServer() throws IOException {
     ServerSocket serverSocket = new ServerSocket(port);
     System.out.println("Server is running and waiting for connections...");
+
+    // Обработка запросов на поиск сервера в потоке
+    BroadcastServer broadcastServer = new BroadcastServer();
+    new Thread((broadcastServer)).start();
 
     // Обработка каждого клиента в новом потоке
     while (true) {
@@ -29,7 +36,7 @@ public class ChatServer {
   }
 
   // Broadcast a message to all clients
-  public static void broadcast(String message, ClientHandler sender) {
+  public static void broadcastMessage(String message, ClientHandler sender) {
     for (ClientHandler client : ClientList) {
       if (client != sender) {
         String SenderName = (sender == null) ? "Server" : sender.username;
@@ -71,14 +78,14 @@ public class ChatServer {
             while (true) {
               if (serverInput.hasNext()) {
                 String serverMessage = serverInput.nextLine();
-                broadcast(serverMessage, null);
+                broadcastMessage(serverMessage, null);
               }
             }
           }).start();
 
           while (clientInput.hasNextLine()) {
             String clientMessage = clientInput.nextLine();
-            broadcast(clientMessage, this);
+            broadcastMessage(clientMessage, this);
             System.out.println("[" + username + "] " + clientMessage);
           }
         }
