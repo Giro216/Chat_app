@@ -39,7 +39,7 @@ public class BroadcastClient implements Runnable {
       String message = clientIp.getHostAddress() + ": is searching the server";
       byte[] buffer = message.getBytes();
       InetAddress broadcastIp = new BroadcastAddressFinder().getBroadcastIp();
-      packet = new DatagramPacket(buffer, buffer.length, broadcastIp, 8001);
+      packet = new DatagramPacket(buffer, buffer.length, broadcastIp, UDP_PORT);
     } catch (Exception e) {
       e.printStackTrace();
     }
